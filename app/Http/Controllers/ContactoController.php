@@ -7,18 +7,26 @@ use Illuminate\Http\Request;
 
 class ContactoController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $contactos = Contacto::orderBy('nome')->get();
-        $contactoEditar = null;
-
-        if ($request->filled('editar')) {
-            $contactoEditar = Contacto::find($request->query('editar'));
-        }
 
         return view('welcome', [
             'contactos' => $contactos,
-            'contactoEditar' => $contactoEditar,
+        ]);
+    }
+
+    public function create()
+    {
+        return view('contactos.formulario', [
+            'contactoEditar' => null,
+        ]);
+    }
+
+    public function edit(Contacto $contacto)
+    {
+        return view('contactos.formulario', [
+            'contactoEditar' => $contacto,
         ]);
     }
 
